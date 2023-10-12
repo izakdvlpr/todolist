@@ -16,33 +16,31 @@ import java.util.Base64;
 
 @Component
 public class FilterTaskAuthentication extends OncePerRequestFilter {
-    @Autowired
-    private IUserRepository userRepository;
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        var authorization = request.getHeader("Authorization");
-        var token = authorization.substring("Basic".length()).trim();
-        var credentials = new String(Base64.getDecoder().decode(token)).split(":");
+  @Autowired
+  private IUserRepository userRepository;
 
-        var username = credentials[0];
-        var password = credentials[1];
+  @Override
+  protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    if (request.getServletPath().startsWith("/tasks")) {
+      var authorization = request.getHeader("Authorization");
+      var token = authorization.substring("Basic".length()).trim();
+      var credentials = new String(Base64.getDecoder().decode(token)).split(":");
 
-        var user = this.userRepository.findByUsername(username);
+      var username = credentials[0];
+      var password = credentials[1];
 
-        if (user == null) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value());
+      var user = this.userRepository.findByUsername(username);
+      var passwordValid = user != null && BCrypt.verifyer().verify(password.toCharArray(), user.getPassword()).verified;
 
-            return;
-        }
+      if (user == null || !passwordValid) {
+        response.sendError(HttpStatus.UNAUTHORIZED.value());
 
-        var passwordValid = BCrypt.verifyer().verify(password.toCharArray(), user.getPassword()).verified;
+        return;
+      }
 
-        if (!passwordValid) {
-            response.sendError(HttpStatus.UNAUTHORIZED.value());
-
-            return;
-        }
-
-        filterChain.doFilter(request, response);
+      request.setAttribute("userId", user.getId());
     }
+
+    filterChain.doFilter(request, response);
+  }
 }
