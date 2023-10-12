@@ -14,23 +14,23 @@ import java.util.UUID;
 @Data
 @Entity(name = "tb_tasks")
 public class TaskModel {
-    @Id
-    @GeneratedValue(generator = "UUID")
-    private UUID id;
+  @Id
+  @GeneratedValue(generator = "UUID")
+  private UUID id;
 
-    @Column(length = 50)
-    private String title;
+  @Column(length = 50)
+  private String title;
 
-    private String description;
+  private String description;
 
-    private String priority;
+  private String priority;
 
-    private String userId;
+  private UUID userId;
 
-    private LocalDateTime startAt;
+  private LocalDateTime startAt;
 
-    private LocalDateTime endAt;
+  private LocalDateTime endAt;
 
-    @CreationTimestamp
-    private LocalDateTime createdAt;
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 }

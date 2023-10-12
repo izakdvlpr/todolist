@@ -12,23 +12,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    @Autowired
-    private IUserRepository userRepository;
+  @Autowired
+  private IUserRepository userRepository;
 
-    @PostMapping()
-    public ResponseEntity create(@RequestBody UserModel user) {
-        var usernameAlreadyExists = this.userRepository.findByUsername(user.getUsername());
+  @PostMapping()
+  public ResponseEntity create(@RequestBody UserModel user) {
+    var usernameAlreadyExists = this.userRepository.findByUsername(user.getUsername());
 
-        if (usernameAlreadyExists != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists.");
-        }
-
-        var passwordHashed = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
-
-        user.setPassword(passwordHashed);
-
-        this.userRepository.save(user);
-
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    if (usernameAlreadyExists != null) {
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User already exists.");
     }
+
+    var passwordHashed = BCrypt.withDefaults().hashToString(12, user.getPassword().toCharArray());
+
+    user.setPassword(passwordHashed);
+
+    this.userRepository.save(user);
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(user);
+  }
 }
