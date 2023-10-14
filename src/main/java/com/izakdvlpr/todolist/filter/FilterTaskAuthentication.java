@@ -1,7 +1,7 @@
-package com.izakdvlpr.todolist.todolist.filter;
+package com.izakdvlpr.todolist.filter;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
-import com.izakdvlpr.todolist.todolist.user.IUserRepository;
+import com.izakdvlpr.todolist.user.IUserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

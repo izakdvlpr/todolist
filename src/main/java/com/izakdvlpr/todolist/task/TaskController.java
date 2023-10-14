@@ -1,6 +1,6 @@
-package com.izakdvlpr.todolist.todolist.task;
+package com.izakdvlpr.todolist.task;
 
-import com.izakdvlpr.todolist.todolist.utils.ObjectUtils;
+import com.izakdvlpr.todolist.utils.ObjectUtils;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,11 +48,17 @@ public class TaskController {
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity update(@PathVariable UUID id, @RequestBody TaskModel data) {
+  public ResponseEntity update(@PathVariable UUID id, @RequestBody TaskModel data, HttpServletRequest request) {
     var task = this.taskRepository.findById(id).orElse(null);
 
     if (task == null) {
-      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Task not found");
+      return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Task not found.");
+    }
+
+    var userId = (UUID) request.getAttribute("userId");
+
+    if (!task.getUserId().equals(userId)) {
+      return ResponseEntity.status(HttpStatus.FORBIDDEN).body("You do not have permission to change this task.");
     }
 
     ObjectUtils.copyNonNullProperties(data, task);

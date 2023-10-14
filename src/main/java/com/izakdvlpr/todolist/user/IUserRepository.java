@@ -1,4 +1,4 @@
-package com.izakdvlpr.todolist.todolist.user;
+package com.izakdvlpr.todolist.user;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

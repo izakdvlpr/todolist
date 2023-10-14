@@ -1,4 +1,4 @@
-package com.izakdvlpr.todolist.todolist.utils;
+package com.izakdvlpr.todolist.utils;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.BeanWrapper;

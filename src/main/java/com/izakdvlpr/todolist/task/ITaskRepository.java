@@ -1,7 +1,6 @@
-package com.izakdvlpr.todolist.todolist.task;
+package com.izakdvlpr.todolist.task;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.scheduling.config.Task;
 
 import java.util.List;
 import java.util.UUID;

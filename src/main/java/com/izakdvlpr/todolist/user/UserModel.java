@@ -1,4 +1,4 @@
-package com.izakdvlpr.todolist.todolist.user;
+package com.izakdvlpr.todolist.user;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

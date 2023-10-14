@@ -1,4 +1,4 @@
-package com.izakdvlpr.todolist.todolist.user;
+package com.izakdvlpr.todolist.user;
 
 import at.favre.lib.crypto.bcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;

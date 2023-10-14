@@ -1,4 +1,4 @@
-package com.izakdvlpr.todolist.todolist;
+package com.izakdvlpr.todolist;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
